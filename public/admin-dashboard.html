@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Society Complaint Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">🛡️ Admin Dashboard</div>
+            <div class="navbar-user">
+                <div class="user-info">
+                    <div class="user-name" id="userName">Loading...</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Stats Overview -->
+        <div class="grid grid-4" id="statsGrid" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <h3 id="totalComplaints">0</h3>
+                <p>Total Complaints</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="pendingComplaints"
+                    style="background: linear-gradient(135deg, var(--status-pending), var(--status-pending)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    0</h3>
+                <p>Pending</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="progressComplaints"
+                    style="background: linear-gradient(135deg, var(--status-progress), var(--status-progress)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    0</h3>
+                <p>In Progress</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="resolvedComplaints"
+                    style="background: linear-gradient(135deg, var(--status-resolved), var(--status-resolved)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    0</h3>
+                <p>Resolved</p>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Filter by Status</label>
+                <select id="statusFilter" class="form-control">
+                    <option value="">All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Filter by Category</label>
+                <select id="categoryFilter" class="form-control">
+                    <option value="">All Categories</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Security">Security</option>
+                    <option value="Noise Complaints">Noise Complaints</option>
+                    <option value="Parking Issues">Parking Issues</option>
+                    <option value="Cleanliness">Cleanliness</option>
+                    <option value="Water Supply">Water Supply</option>
+                    <option value="Electricity">Electricity</option>
+                    <option value="Lift/Elevator">Lift/Elevator</option>
+                    <option value="Common Areas">Common Areas</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Filter by Priority</label>
+                <select id="priorityFilter" class="form-control">
+                    <option value="">All Priorities</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Search</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Search complaints...">
+            </div>
+        </div>
+
+        <!-- Complaints List -->
+        <div id="complaintsList">
+            <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                <div class="loading" style="width: 40px; height: 40px; margin: 0 auto 1rem;"></div>
+                <p>Loading complaints...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- View/Manage Complaint Modal -->
+    <div id="manageComplaintModal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h2>Manage Complaint</h2>
+                <button class="modal-close" id="closeManageModalBtn">&times;</button>
+            </div>
+
+            <div id="complaintDetails">
+                <!-- Will be populated dynamically -->
+            </div>
+
+            <!-- Admin Actions -->
+            <div class="card" style="margin-top: 1rem; background: rgba(0, 212, 255, 0.05);">
+                <h3>Admin Actions</h3>
+                <div class="grid grid-3" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label for="updateStatus">Update Status</label>
+                        <select id="updateStatus" class="form-control">
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="updatePriority">Update Priority</label>
+                        <select id="updatePriority" class="form-control">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignTo">Assign To</label>
+                        <input type="text" id="assignTo" class="form-control" placeholder="Handler name">
+                    </div>
+                </div>
+                <button id="updateComplaintBtn" class="btn btn-success" style="width: 100%; margin-top: 1rem;">
+                    Update Complaint
+                </button>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section">
+                <h3>Comments</h3>
+                <div id="commentsList" style="margin-bottom: 1rem;">
+                    <!-- Comments will be loaded here -->
+                </div>
+                <form id="addCommentForm">
+                    <div class="form-group">
+                        <textarea id="commentText" class="form-control" placeholder="Add admin comment..." rows="3"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </form>
+            </div>
+
+            <!-- Delete Action -->
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                <button id="deleteComplaintBtn" class="btn btn-danger">
+                    Delete Complaint
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>

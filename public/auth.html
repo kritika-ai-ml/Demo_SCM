@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - Society Complaint Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="container" style="max-width: 500px; padding-top: 3rem;">
+        <!-- Logo/Title -->
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h1
+                style="background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                🏢 SCM
+            </h1>
+            <p style="color: var(--text-secondary);">Society Complaint Management</p>
+        </div>
+
+        <!-- Auth Card -->
+        <div class="card">
+            <!-- Toggle Buttons -->
+            <div
+                style="display: flex; gap: 1rem; margin-bottom: 2rem; background: var(--bg-tertiary); border-radius: var(--radius-md); padding: 0.5rem;">
+                <button id="loginTab" class="btn btn-secondary" style="flex: 1; transition: var(--transition);">
+                    Login
+                </button>
+                <button id="registerTab" class="btn btn-secondary" style="flex: 1;">
+                    Register
+                </button>
+            </div>
+
+            <!-- Alert Message -->
+            <div id="alertMessage" class="hidden"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <span id="loginBtnText">Sign In</span>
+                    <span id="loginSpinner" class="loading hidden" style="margin-left: 0.5rem;"></span>
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="hidden">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" class="form-control" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="••••••••"
+                        minlength="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerRole">Register As</label>
+                    <select id="registerRole" class="form-control" required>
+                        <option value="resident">Resident</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerFlat">Flat Number (Optional)</label>
+                    <input type="text" id="registerFlat" class="form-control" placeholder="A-101">
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Phone Number (Optional)</label>
+                    <input type="tel" id="registerPhone" class="form-control" placeholder="123-456-7890">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <span id="registerBtnText">Create Account</span>
+                    <span id="registerSpinner" class="loading hidden" style="margin-left: 0.5rem;"></span>
+                </button>
+            </form>
+
+            <!-- Demo Info -->
+            <div
+                style="margin-top: 2rem; padding: 1rem; background: var(--bg-tertiary); border-radius: var(--radius-md); font-size: 0.9rem; color: var(--text-secondary);">
+                <p style="margin-bottom: 0.5rem;"><strong>Quick Test:</strong></p>
+                <p style="margin: 0.25rem 0;">Create a new account or use the form above</p>
+                <p style="margin: 0.25rem 0; font-size: 0.85rem; color: var(--text-muted);">Select role: Resident or
+                    Admin</p>
+            </div>
+        </div>
+
+        <!-- Back to Home -->
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/" style="color: var(--text-secondary); text-decoration: none; transition: var(--transition);">
+                ← Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resident Dashboard - Society Complaint Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <div class="navbar-brand">🏢 Resident Dashboard</div>
+            <div class="navbar-user">
+                <div class="user-info">
+                    <div class="user-name" id="userName">Loading...</div>
+                    <div class="user-role">Resident</div>
+                </div>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Stats Overview -->
+        <div class="grid grid-4" id="statsGrid" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <h3 id="totalComplaints">0</h3>
+                <p>Total Complaints</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="pendingComplaints"
+                    style="background: linear-gradient(135deg, var(--status-pending), var(--status-pending)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    0</h3>
+                <p>Pending</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="progressComplaints"
+                    style="background: linear-gradient(135deg, var(--status-progress), var(--status-progress)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    0</h3>
+                <p>In Progress</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="resolvedComplaints"
+                    style="background: linear-gradient(135deg, var(--status-resolved), var(--status-resolved)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    0</h3>
+                <p>Resolved</p>
+            </div>
+        </div>
+
+        <!-- New Complaint Button -->
+        <div style="text-align: right; margin-bottom: 2rem;">
+            <button id="newComplaintBtn" class="btn btn-primary" style="font-size: 1.1rem;">
+                + New Complaint
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Filter by Status</label>
+                <select id="statusFilter" class="form-control">
+                    <option value="">All Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Filter by Category</label>
+                <select id="categoryFilter" class="form-control">
+                    <option value="">All Categories</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Security">Security</option>
+                    <option value="Noise Complaints">Noise Complaints</option>
+                    <option value="Parking Issues">Parking Issues</option>
+                    <option value="Cleanliness">Cleanliness</option>
+                    <option value="Water Supply">Water Supply</option>
+                    <option value="Electricity">Electricity</option>
+                    <option value="Lift/Elevator">Lift/Elevator</option>
+                    <option value="Common Areas">Common Areas</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Search</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Search complaints...">
+            </div>
+        </div>
+
+        <!-- Complaints List -->
+        <div id="complaintsList">
+            <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                <div class="loading" style="width: 40px; height: 40px; margin: 0 auto 1rem;"></div>
+                <p>Loading complaints...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Complaint Modal -->
+    <div id="newComplaintModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2>Submit New Complaint</h2>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="newComplaintForm">
+                <div class="form-group">
+                    <label for="complaintTitle">Title *</label>
+                    <input type="text" id="complaintTitle" class="form-control" placeholder="Brief title of the issue"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="complaintDescription">Description *</label>
+                    <textarea id="complaintDescription" class="form-control"
+                        placeholder="Detailed description of the complaint..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="complaintCategory">Category *</label>
+                    <select id="complaintCategory" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Security">Security</option>
+                        <option value="Noise Complaints">Noise Complaints</option>
+                        <option value="Parking Issues">Parking Issues</option>
+                        <option value="Cleanliness">Cleanliness</option>
+                        <option value="Water Supply">Water Supply</option>
+                        <option value="Electricity">Electricity</option>
+                        <option value="Lift/Elevator">Lift/Elevator</option>
+                        <option value="Common Areas">Common Areas</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="complaintPriority">Priority *</label>
+                    <select id="complaintPriority" class="form-control" required>
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Attachments (Images/PDFs, max 5MB each)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="complaintFiles" class="file-upload-input" multiple accept="image/*,.pdf">
+                        <label for="complaintFiles" class="file-upload-label">
+                            <span>📎 Choose Files or Drag Here</span>
+                        </label>
+                    </div>
+                    <div id="filePreview" class="file-preview"></div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <span id="submitBtnText">Submit Complaint</span>
+                    <span id="submitSpinner" class="loading hidden"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Complaint Modal -->
+    <div id="viewComplaintModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Complaint Details</h2>
+                <button class="modal-close" id="closeViewModalBtn">&times;</button>
+            </div>
+            <div id="complaintDetails">
+                <!-- Will be populated dynamically -->
+            </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section">
+                <h3>Comments</h3>
+                <div id="commentsList" style="margin-bottom: 1rem;">
+                    <!-- Comments will be loaded here -->
+                </div>
+                <form id="addCommentForm">
+                    <div class="form-group">
+                        <textarea id="commentText" class="form-control" placeholder="Add a comment..." rows="3"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/resident.js"></script>
+</body>
+
+</html>

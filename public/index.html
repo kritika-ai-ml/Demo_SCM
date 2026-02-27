@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Society Complaint Management</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Hero Section -->
+    <div style="text-align: center; padding: 4rem 0;">
+      <h1 style="font-size: 3.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        Society Complaint Management
+      </h1>
+      <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Efficiently manage and resolve society complaints with our modern, user-friendly platform
+      </p>
+
+      <!-- Feature Cards -->
+      <div class="grid grid-3" style="margin-bottom: 3rem;">
+        <div class="card">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">📝</div>
+          <h3>Submit Complaints</h3>
+          <p style="color: var(--text-secondary);">Easily file complaints with photos and detailed descriptions</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+          <h3>Track Status</h3>
+          <p style="color: var(--text-secondary);">Monitor your complaint progress in real-time</p>
+        </div>
+        <div class="card">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+          <h3>Quick Resolution</h3>
+          <p style="color: var(--text-secondary);">Admin team ensures fast and efficient resolution</p>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="/auth.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+          Get Started →
+        </a>
+        <a href="/auth.html?mode=login" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+          Sign In
+        </a>
+      </div>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="card" style="margin-top: 4rem;">
+      <h2 style="text-align: center; margin-bottom: 2rem;">Complaint Categories</h2>
+      <div class="grid grid-4">
+        <div style="text-align: center; padding: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔧</div>
+          <p style="font-weight: 600;">Maintenance</p>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛡️</div>
+          <p style="font-weight: 600;">Security</p>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔇</div>
+          <p style="font-weight: 600;">Noise</p>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🚗</div>
+          <p style="font-weight: 600;">Parking</p>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🧹</div>
+          <p style="font-weight: 600;">Cleanliness</p>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💧</div>
+          <p style="font-weight: 600;">Water Supply</p>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚡</div>
+          <p style="font-weight: 600;">Electricity</p>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏗️</div>
+          <p style="font-weight: 600;">Common Areas</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 4rem; padding: 2rem 0; color: var(--text-muted);">
+      <p>&copy; 2026 Society Complaint Management. Built with 💙</p>
+    </div>
+  </div>
+
+  <script>
+    // Check if user is already logged in
+    const token = localStorage.getItem('token');
+    if (token) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        // Redirect to appropriate dashboard
+        window.location.href = user.role === 'admin' ? '/admin-dashboard.html' : '/resident-dashboard.html';
+      }
+    }
+  </script>
+</body>
+</html>
