@@ -9,44 +9,25 @@ const complaintRoutes = require('./routes/complaints');
 
 const app = express();
 
-// Middleware
+// ================= MIDDLEWARE =================
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from public directory
+// Serve static files
 app.use(express.static('public'));
-
-// Serve uploaded files
 app.use('/uploads', express.static('uploads'));
 
-// API Routes
+// ================= ROUTES =================
 app.use('/api/auth', authRoutes);
 app.use('/api/complaints', complaintRoutes);
 
-// Root route - serve index.html
+// Root route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// MongoDB connection
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => {
-        console.log('✅ Connected to MongoDB');
-
-        // Start server
-        const PORT = process.env.PORT || 3000;
-        app.listen(PORT, () => {
-            console.log(`🚀 Server running on http://localhost:${PORT}`);
-            console.log(`📁 Environment: ${process.env.NODE_ENV || 'development'}`);
-        });
-    })
-    .catch((error) => {
-        console.error('❌ MongoDB connection error:', error);
-        process.exit(1);
-    });
-
-// Error handling middleware
+// ================= ERROR HANDLER =================
 app.use((err, req, res, next) => {
     console.error('Error:', err);
 
@@ -57,6 +38,7 @@ app.use((err, req, res, next) => {
                 message: 'File size too large. Maximum size is 5MB.'
             });
         }
+
         return res.status(400).json({
             success: false,
             message: err.message
@@ -69,4 +51,14 @@ app.use((err, req, res, next) => {
     });
 });
 
-module.exports = app;
+// ================= START SERVER =================
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+});
+
+// ================= CONNECT MONGODB =================
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('✅ Connected to MongoDB'))
+    .catch(err => console.error('❌ MongoDB connection error:', err));
